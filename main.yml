@@ -1,0 +1,28 @@
+---
+
+- name: COPIANDO SCRIPT VALIDACAO DE SERVICOS
+  copy: 
+    src: check-services.sh 
+    dest: /root 
+    mode: '0777'
+
+- name: COPIANDO SCRIPT JSON
+  copy:
+    src: json.sh
+    dest: /root
+    mode: '0777'
+
+
+- name: EXECUTANDO SCRIPT DE VALIDACAO DE SERVICOS
+  command: sh /root/check-services.sh
+
+- name: EXECUTANDO SCRIPT EM JSON
+  command: sh /root/json.sh
+
+- name: APAGANDO SCRIPT DE VALIDACAO DE SERVICOS
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /root/check-services.sh
+    - /root/json.sh
